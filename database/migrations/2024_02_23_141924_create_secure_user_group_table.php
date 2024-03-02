@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('secure_user_group', function (Blueprint $table) {
             $table->id();
+            $table->char('user_id', 20);
+            $table->char('group_id', 20);
             $table->timestamps();
         });
     }

@@ -13,20 +13,11 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->integer('item_id');
             $table->char('item_code', 10);
             $table->char('bar_code', 30)->nullable();
             $table->string('name');
             $table->string('description');
             $table->decimal('unit_cost', 10, 2);
-            $table->decimal('markup_1', 6, 2);
-            $table->decimal('markup_2', 6, 2);
-            $table->decimal('markup_3', 6, 2);
-            $table->decimal('price_1', 10, 2);
-            $table->decimal('price_2', 10, 2);
-            $table->decimal('price_3', 10, 2);
-            $table->decimal('price_4', 10, 2);
-            $table->decimal('price_5', 10, 2);
             $table->integer('total_qty')->default(0);
             $table->date('last_sold_on');
             $table->string('unit');

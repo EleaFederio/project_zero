@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('post_item_type', function (Blueprint $table) {
             $table->id();
+            $table->integer('item_type_id');
+            $table->char('description', 40);
             $table->timestamps();
         });
     }
