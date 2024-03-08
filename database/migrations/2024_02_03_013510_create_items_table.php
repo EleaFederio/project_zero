@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->decimal('unit_cost', 10, 2);
             $table->integer('total_qty')->default(0);
-            $table->date('last_sold_on');
+            $table->date('last_sold_on')->nullable();
             $table->string('unit');
             $table->timestamps();
         });

@@ -12,7 +12,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+        return $items;
     }
 
     /**
@@ -20,7 +21,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return Item::all();
     }
 
     /**
@@ -28,7 +29,19 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'item_code' => 'required|string|max:10|unique:items,item_code',
+            'bar_code' => 'string|max:30',
+            'name' => 'required|string',
+            'description' => 'string',
+            'unit_cost' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'unit' => 'required|string'
+        ]);
+        Item::create($request->all());
+        return response()->json([
+            'success' => true,
+            'message' => 'Item Added!'
+        ]);
     }
 
     /**
