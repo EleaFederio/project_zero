@@ -11,6 +11,7 @@ import {
     Toolbar,
     Typography
 } from "@mui/material";
+import AddItemModal from '../components/maintenance/AddItemModal';
 
 const modalStyle = {
     position: 'absolute',
@@ -25,8 +26,17 @@ const modalStyle = {
 }
 
 const MaintenancePage = () => {
-    const [showMenu, setShowMenu] = useState(null);
+    const [showModal, setShowModal] = useState(null);
     const [items, setItems] = useState();
+    const [newItem, setNewItem] = useState({
+        item_code : '',
+        bar_code : '',
+        name : '',
+        decription : '',
+        unit_cost : 0,
+        quantity : 0,
+        unit : ''
+    });
     const [modalView, setModalView] = useState(false);
 
     const getItems = () => {
@@ -41,14 +51,26 @@ const MaintenancePage = () => {
 
     const handleContextMenu = (event) => {
         event.preventDefault();
-        setShowMenu(event.currentTarget);
+        setShowModal(event.currentTarget);
     };
 
     const handleCloseMenu = () => {
         setModalView(false);
     };
 
-    const open = Boolean(setShowMenu);
+    const updateNewItem = (e) => {
+        const { name, value } = e.target;
+        if (name === 'unit_cost' && isNaN(value)) {
+            return;
+        }
+        if (name === 'quantity' && isNaN(value)) {
+            return;
+        }
+        setNewItem({ ...newItem, [name]: value });
+        console.log(newItem);
+    };
+
+    const open = Boolean(setShowModal);
 
     useEffect(() => {
         getItems();
@@ -139,75 +161,18 @@ const MaintenancePage = () => {
                         right: 60
                     }}
                     color={"primary"}
-                    onClick={() => setModalView(true)}
+                    onClick={() => setShowModal(true)}
                 >
                     +
                 </Fab>
 
                 {/* Modal */}
-                <Dialog
-                    open={modalView}
-                    onClose={handleCloseMenu}
-                    fullWidth={true}
-                    maxWidth={'md'}
-                >
-                    <DialogTitle>Add New Item</DialogTitle>
-                    <DialogContent>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    required
-                                    label={'Item Code'}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    label={'Bar Code'}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    label={'Name'}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={'Description'}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <TextField
-                                    required
-                                    label={'Unit Cost'}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <TextField
-                                    required
-                                    label={'Quantity'}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <TextField
-                                    required
-                                    label={'Unit'}
-                                    fullWidth
-                                />
-                            </Grid>
-                        </Grid>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleCloseMenu}>Close</Button>
-                        <Button variant={'contained'} >Add Item</Button>
-                    </DialogActions>
-                </Dialog>
+                <AddItemModal 
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    newItem={newItem}
+                    updateNewItem={updateNewItem}
+                />
             </Container>
         </>
     )
