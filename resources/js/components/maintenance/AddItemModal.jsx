@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material"
 
-const AddItemModal = ({ showModal, setShowModal, newItem, updateNewItem }) => {
+const AddItemModal = ({ showModal, setShowModal, newItem, updateNewItem, addItem }) => {
     return(
         <Dialog
             open={showModal}
@@ -44,8 +44,8 @@ const AddItemModal = ({ showModal, setShowModal, newItem, updateNewItem }) => {
                     <Grid item xs={12}>
                         <TextField
                             label={'Description'}
-                            name={'decription'}
-                            value={newItem.decription}
+                            name={'description'}
+                            value={newItem.description}
                             onChange={updateNewItem}
                             fullWidth
                         />
@@ -84,7 +84,7 @@ const AddItemModal = ({ showModal, setShowModal, newItem, updateNewItem }) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setShowModal(false)}>Close</Button>
-                <Button variant={'contained'} >Add Item</Button>
+                <Button variant={'contained'} onClick={() => addItem()} >Add Item</Button>
             </DialogActions>
         </Dialog>
     )

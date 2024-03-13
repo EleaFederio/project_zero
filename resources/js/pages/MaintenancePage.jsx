@@ -32,17 +32,51 @@ const MaintenancePage = () => {
         item_code : '',
         bar_code : '',
         name : '',
-        decription : '',
+        description : '',
         unit_cost : 0,
         quantity : 0,
         unit : ''
     });
     const [modalView, setModalView] = useState(false);
 
+    const resetItemData = () => {
+        setNewItem({
+            item_code : '',
+            bar_code : '',
+            name : '',
+            description : '',
+            unit_cost : 0,
+            quantity : 0,
+            unit : ''
+        });
+    }
+
     const getItems = () => {
         axios.get('api/items')
             .then(res => {
                 setItems(res.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    const addItem = () => {
+        let newItemData = {
+            'item_code' : newItem.item_code,
+            'barcode' : newItem.bar_code,
+            'name' : newItem.name,
+            'description' : newItem.description,
+            'unit_cost' : newItem.unit_cost,
+            'total_qty' : newItem.quantity,
+            'unit' : newItem.unit
+        }
+        axios.post('api/items', newItemData)
+            .then(result => {
+                console.log(result);
+                resetItemData();
+                setShowModal(false);
+                getItems()
             })
             .catch(error => {
                 console.log(error)
@@ -144,14 +178,6 @@ const MaintenancePage = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    {/*<Popover*/}
-                    {/*    anchorEl={showMenu}*/}
-                    {/*    open={open}*/}
-                    {/*    onClose={handleCloseMenu}*/}
-                    {/*>*/}
-                    {/*    <MenuItem onClick={handleCloseMenu}>Update</MenuItem>*/}
-                    {/*    <MenuItem onClick={handleCloseMenu}>Delete</MenuItem>*/}
-                    {/*</Popover>*/}
                 </Paper>
 
                 <Fab
@@ -167,11 +193,12 @@ const MaintenancePage = () => {
                 </Fab>
 
                 {/* Modal */}
-                <AddItemModal 
+                <AddItemModal
                     showModal={showModal}
                     setShowModal={setShowModal}
                     newItem={newItem}
                     updateNewItem={updateNewItem}
+                    addItem={addItem}
                 />
             </Container>
         </>
