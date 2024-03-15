@@ -1,23 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {
     AppBar,
-    Box, Button, Card, CardActions, CardContent, CardHeader,
+    Box,
     Container,
     CssBaseline, Fab,
     Grid,
-    InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    TextField,
     Toolbar,
     Typography
 } from "@mui/material";
-import {ReceiptLong, ShoppingCart} from "@mui/icons-material";
-import AddSaleModal from "@/components/sales_register/AddSaleModal.jsx";
+import SalesCart from "@/components/sales_register/SalesCart.jsx";
+import SalesInventory from "@/components/sales_register/SalesInventory.jsx";
 
 const SalesPage = () => {
 
     const [items, setItems] = useState();
-    const [salesModalShow, setSalesModalShow] = useState(false);
-    const [cartItems, setCartItems] = useState();
+    const [cartItems, setCartItems] = useState([]);
+    const [summary, setSummary] = useState({
+        'tax'  : 0.00,
+        'discount' : 0.00,
+        'subTotal' : 0.00,
+        'total' : 0.00
+    });
 
     const getItems = () => {
         axios.get('api/items')
@@ -29,9 +32,33 @@ const SalesPage = () => {
             })
     }
 
+    const addToCart = (productFromProp) => {
+        const check_index = cartItems.findIndex(item => item.id === productFromProp.id);
+        if(check_index !== -1){
+            cartItems[check_index].quantity++;
+            setCartItems(cart => [...cartItems]);
+        }else{
+            setCartItems(cart => [...cartItems,  productFromProp]);
+        }
+    }
+
+    const deleteProduct = (productId) => {
+        const newProduct = cartItems.filter((item) => item.id !== productId);
+        setCartItems(newProduct);
+    }
+
     useEffect(() => {
         getItems();
-    }, [])
+        let subTotal = 0.0;
+        cartItems.map((item) => (
+            subTotal = subTotal + (item.price * item.quantity)
+        ));
+        const data = {
+            'subTotal' : subTotal,
+            'total' :  subTotal
+        };
+        setSummary(data);
+    }, [cartItems])
 
     return (
         <>
@@ -52,84 +79,21 @@ const SalesPage = () => {
 
             <Container sx={{mt: 5}} maxWidth={'xl'}>
                 <Grid container spacing={2}>
-                    <Grid item xs={7}>
-                        <Card>
-                            <CardHeader
-                                avatar={
-                                    <ReceiptLong/>
-                                }
-                                title={'Sales Inventory'}
-                            />
-                        </Card>
-                    </Grid>
                     <Grid item xs={5}>
-                        <Card>
-                            <CardHeader
-                                avatar={
-                                <ShoppingCart />
-                                }
-                                title={'Sales Cart'}
-                            />
-                            <CardContent>
-                                <Paper sx={{ width: '100%', overflow: 'auto' }}>
-                                    <TableContainer sx={{maxHeight: 500}}>
-                                        <Table stickyHeader aria-label="sticky table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell><b>Item</b></TableCell>
-                                                    <TableCell><b>Qty</b></TableCell>
-                                                    <TableCell><b>Price</b></TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell></TableCell>
-                                                    <TableCell></TableCell>
-                                                    <TableCell></TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </Paper>
-                            </CardContent>
-                            <CardActions>
-                                <form sx={{mt: 4, ml: 3}}>
-                                    <Grid container alignItems={'center'} spacing={2}>
-                                        <Grid item>
-                                            <InputLabel>Invoice</InputLabel>
-                                        </Grid>
-                                        <Grid item>
-                                            <TextField label={'Name'} sx={{height: 'auto', fontSize: '0.8rem'}} variant={'outlined'} size={'small'} />
-                                        </Grid>
-                                        <Grid item>
-                                            <TextField label={'Address'} sx={{height: 'auto', fontSize: '0.8rem'}} variant={'outlined'} size={'small'} />
-                                        </Grid>
-                                    </Grid>
-                                    <Button>Submit</Button>
-                                </form>
-                            </CardActions>
-                        </Card>
+                        <SalesInventory
+                            items={items}
+                            addToCart={addToCart}
+                        />
+                    </Grid>
+                    <Grid item xs={7}>
+                        <SalesCart
+                            cartItems={cartItems}
+                            summary={summary}
+                            deleteProduct={deleteProduct}
+                        />
                     </Grid>
                 </Grid>
             </Container>
-
-            <Fab
-                style={{
-                    position: 'absolute',
-                    bottom: 60,
-                    right: 60
-                }}
-                color={"primary"}
-                onClick={() => setSalesModalShow(true)}
-            >
-                +
-            </Fab>
-
-            <AddSaleModal
-                salesModalShow={salesModalShow}
-                items={items}
-                setSalesModalShow={setSalesModalShow}
-            />
         </>
     )
 }

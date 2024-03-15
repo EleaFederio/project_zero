@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-    AppBar,
+    AppBar, Autocomplete,
     Box,
     Button,
     Container,
@@ -24,6 +24,8 @@ const modalStyle = {
     boxShadow: 24,
     p: 4,
 }
+
+const options = ['Item Code', 'Item Name'];
 
 const MaintenancePage = () => {
     const [showModal, setShowModal] = useState(null);
@@ -131,12 +133,21 @@ const MaintenancePage = () => {
 
                 {/* Top Components */}
                 <form>
-                    <Grid container alignItems={'center'} spacing={2}>
+                    <Grid container sx={{mt: 2}} alignItems={'center'} spacing={2}>
                         <Grid item>
-                            <InputLabel>Search Items</InputLabel>
+                            <InputLabel>Search Items by:</InputLabel>
                         </Grid>
                         <Grid item>
-                            <TextField sx={{height: 'auto', fontSize: '0.8rem'}} variant={'outlined'} size={'small'}/>
+                            <Autocomplete
+                                disablePortal
+                                sx={{height: 'auto', fontSize: '0.8rem', width: '200px'}}
+                                size='small'
+                                options={options}
+                                defaultValue={'Item Name'}
+                                freeSolo={false}
+                                disableClearable
+                                renderInput={(params) => <TextField {...params} label="Controllable" />}
+                            />
                         </Grid>
                         <Grid item>
                             <TextField sx={{height: 'auto', fontSize: '0.8rem'}} variant={'outlined'} size={'small'}/>

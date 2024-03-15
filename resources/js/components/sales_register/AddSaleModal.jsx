@@ -15,7 +15,7 @@ import {
 
 const options = ['Item Code', 'Item Name'];
 
-const AddSaleModal = ({ salesModalShow, items, setSalesModalShow }) => {
+const AddSaleModal = ({ salesModalShow, items, setSalesModalShow, addToCart }) => {
     return(
         <Dialog
             open={salesModalShow}
@@ -65,7 +65,7 @@ const AddSaleModal = ({ salesModalShow, items, setSalesModalShow }) => {
                                     !items ? <TableRow><p>Loading...</p></TableRow> :
                                         items.map((item) => {
                                             return(
-                                                <TableRow key={item.item_code}>
+                                                <TableRow key={item.id} >
                                                     <TableCell>{item.name}({item.item_code})</TableCell>
                                                     <TableCell>{item.total_qty}</TableCell>
                                                     <TableCell>₱{item.unit_cost}</TableCell>
