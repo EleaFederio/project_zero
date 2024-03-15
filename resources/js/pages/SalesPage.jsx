@@ -16,6 +16,7 @@ import AddSaleModal from "@/components/sales_register/AddSaleModal.jsx";
 const SalesPage = () => {
 
     const [items, setItems] = useState();
+    const [salesModalShow, setSalesModalShow] = useState(false);
     const [cartItems, setCartItems] = useState();
 
     const getItems = () => {
@@ -119,12 +120,15 @@ const SalesPage = () => {
                     right: 60
                 }}
                 color={"primary"}
+                onClick={() => setSalesModalShow(true)}
             >
                 +
             </Fab>
 
             <AddSaleModal
+                salesModalShow={salesModalShow}
                 items={items}
+                setSalesModalShow={setSalesModalShow}
             />
         </>
     )
