@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->string('customer_id');
             $table->string('area');
             $table->foreignId('price_level_id')->constrained();
             $table->foreignId('customer_type_id')->constrained();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('middle_initial');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('middle_name');
             $table->string('province');
             $table->string('municipality');
             $table->string('barangay');
