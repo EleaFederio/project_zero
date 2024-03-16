@@ -7,6 +7,30 @@ import CustomerDetailsCard from "@/components/maintenance/CustomerDetailsCard.js
 
 const CustomerPage = () => {
     const [showCustomerModal, setShowCustomerModal] = useState(false);
+    const [newCustomer, setNewCustomer] = useState({
+        area : '',
+        price_level : '',
+        customer_type : '',
+        firstname : '',
+        lastname : '',
+        middle_name : '',
+        address : '',
+        date_of_birth : null,
+        place_of_birth : '',
+        sex : '',
+        citizenship : '',
+        occupation : '',
+        tin : '',
+        company_name : '',
+        company_address : '',
+        business_nature : ''
+    })
+
+    const updateNewCustomerState = (e) => {
+        const { name, value } = e.target;
+        setNewCustomer({ ...newCustomer, [name]: value });
+        console.log(newCustomer);
+    };
 
     return(
         <>
@@ -52,6 +76,9 @@ const CustomerPage = () => {
             <NewCustomerModal
                 showCustomerModal={showCustomerModal}
                 setShowCustomerModal={setShowCustomerModal}
+                newCustomer={newCustomer}
+                setNewCustomer={setNewCustomer}
+                updateNewCustomerState={updateNewCustomerState}
             />
         </>
     )

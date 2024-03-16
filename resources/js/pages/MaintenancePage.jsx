@@ -4,28 +4,15 @@ import {
     Box,
     Button,
     Container,
-    CssBaseline, Dialog, DialogActions, DialogContent, DialogTitle,
+    CssBaseline,
     Fab, Grid,
-    InputLabel, MenuItem, Modal, Paper, Popover, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+    InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
     TextField,
     Toolbar,
     Typography
 } from "@mui/material";
 import AddItemModal from '../components/maintenance/AddItemModal';
 import {AddBox} from "@mui/icons-material";
-
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-}
-
 const options = ['Item Code', 'Item Name'];
 
 const MaintenancePage = () => {
@@ -40,7 +27,6 @@ const MaintenancePage = () => {
         quantity : 0,
         unit : ''
     });
-    const [modalView, setModalView] = useState(false);
 
     const resetItemData = () => {
         setNewItem({
@@ -86,14 +72,6 @@ const MaintenancePage = () => {
             })
     }
 
-    const handleContextMenu = (event) => {
-        event.preventDefault();
-        setShowModal(event.currentTarget);
-    };
-
-    const handleCloseMenu = () => {
-        setModalView(false);
-    };
 
     const updateNewItem = (e) => {
         const { name, value } = e.target;
@@ -106,8 +84,6 @@ const MaintenancePage = () => {
         setNewItem({ ...newItem, [name]: value });
         console.log(newItem);
     };
-
-    const open = Boolean(setShowModal);
 
     useEffect(() => {
         getItems();
@@ -177,7 +153,7 @@ const MaintenancePage = () => {
                                     !items ? <TableRow><p>Loading...</p></TableRow> :
                                         items.map((item) => {
                                             return(
-                                                <TableRow key={item.item_code} onContextMenu={handleCloseMenu}>
+                                                <TableRow key={item.item_code}>
                                                     <TableCell>{item.item_code}</TableCell>
                                                     <TableCell>{item.name}</TableCell>
                                                     <TableCell>{item.description}</TableCell>

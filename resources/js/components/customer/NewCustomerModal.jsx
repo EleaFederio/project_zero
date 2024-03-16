@@ -1,8 +1,18 @@
 import React from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField} from "@mui/material";
-import {Label} from "@mui/icons-material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    Grid,
+    InputLabel, MenuItem, Select,
+    TextField
+} from "@mui/material";
+import {DatePicker} from "@mui/x-date-pickers";
 
-const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
+const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer, setNewCustomer, updateNewCustomerState}) => {
     return (
         <Dialog
             open={showCustomerModal}
@@ -21,30 +31,30 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                         <TextField
                             required
                             label={'Area'}
-                            name='firstname'
+                            name='area'
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.item_code}
+                            value={newCustomer.area}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                         <TextField
                             label={'Price Level'}
-                            name={'lastname'}
+                            name={'price_level'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.bar_code}
+                            value={newCustomer.price_level}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                         <TextField
                             label={'Type'}
-                            name={'lastname'}
+                            name={'customer_type'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.bar_code}
+                            value={newCustomer.customer_type}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -56,10 +66,10 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                         <TextField
                             required
                             label={'First Name'}
-                            name='firstname'
+                            name={'firstname'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.item_code}
+                            value={newCustomer.firstname}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -68,8 +78,8 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                             label={'Last Name'}
                             name={'lastname'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.bar_code}
+                            value={newCustomer.lastname}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -77,10 +87,10 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                         <TextField
                             required
                             label={'M.I.'}
-                            name={'middlename'}
+                            name={'middle_name'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.name}
+                            value={newCustomer.middle_name}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -88,22 +98,21 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                     <Grid item xs={12}>
                         <TextField
                             label={'Address'}
-                            name={'description'}
+                            name={'address'}
                             size={'small'}
-                            // value={newItem.description}
-                            // onChange={updateNewItem}
+                            value={newCustomer.address}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
                     {/* Third Row - Date of Birth, Place of Birth, Sex, Citizenship */}
-                    <Grid item xs={12} sm={2}>
-                        <TextField
-                            required
+                    <Grid item xs={12} sm={3}>
+                        <DatePicker
                             label={'Date of Birth'}
-                            name={'unit_cost'}
-                            size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.unit_cost}
+                            name={'date_of_birth'}
+                            slotProps={{ textField: { size: 'small' } }}
+                            value={newCustomer.date_of_birth}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -111,32 +120,36 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                         <TextField
                             required
                             label={'Place of Birth'}
-                            name={'quantity'}
+                            name={'place_of_birth'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.quantity}
+                            value={newCustomer.place_of_birth}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={12} sm={2}>
-                        <TextField
-                            required
-                            label={'Sex'}
-                            name={'quantity'}
-                            size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.quantity}
-                            fullWidth
-                        />
+                        <FormControl fullWidth>
+                            <InputLabel value={newCustomer.sex} size={'small'} id="demo-simple-select-label">Sex</InputLabel>
+                            <Select
+                                value={newCustomer.sex}
+                                title={'Sex'}
+                                size={'small'}
+                                name={'sex'}
+                                onChange={updateNewCustomerState}
+                            >
+                                <MenuItem value={'Male'}>Male</MenuItem>
+                                <MenuItem value={'Female'}>Female</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={3}>
                         <TextField
                             required
                             label={'Citizenship'}
-                            name={'unit'}
+                            name={'citizenship'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.unit}
+                            value={newCustomer.citizenship}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -145,10 +158,10 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                         <TextField
                             required
                             label={'Occupation'}
-                            name={'unit'}
+                            name={'occupation'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.unit}
+                            value={newCustomer.occupation}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -156,10 +169,10 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                         <TextField
                             required
                             label={'T.I.N.'}
-                            name={'unit'}
+                            name={'tin'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.unit}
+                            value={newCustomer.tin}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
@@ -167,34 +180,34 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal}) => {
                         <h4 style={{ margin: 0}}>Corporate Information</h4>
                     </Grid>
                     {/* First Row - First Name, Last Name and Middle Name */}
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={8}>
                         <TextField
                             required
                             label={'Company Name'}
-                            name='firstname'
+                            name={'company_name'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.item_code}
+                            value={newCustomer.company_name}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={12} sm={12}>
                         <TextField
                             label={'Address'}
-                            name={'lastname'}
+                            name={'company_address'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.bar_code}
+                            value={newCustomer.company_address}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label={'Nature of Business'}
-                            name={'lastname'}
+                            name={'business_nature'}
                             size={'small'}
-                            // onChange={updateNewItem}
-                            // value={newItem.bar_code}
+                            value={newCustomer.business_nature}
+                            onChange={updateNewCustomerState}
                             fullWidth
                         />
                     </Grid>
