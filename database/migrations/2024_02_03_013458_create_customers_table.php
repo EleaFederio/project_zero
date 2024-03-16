@@ -13,17 +13,22 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->char('customer_type', 15);
+            $table->string('area');
+            $table->foreignId('price_level_id')->constrained();
+            $table->foreignId('customer_type_id')->constrained();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_initial');
+            $table->string('address');
             $table->date('date_of_birth');
             $table->string('place_of_birth');
-            $table->string('address');
             $table->char('sex', 1);
-            $table->string('civil_status');
+            $table->string('citizenship');
             $table->string('occupation');
+            $table->string('tin');
             $table->string('company_name');
+            $table->string('company_address');
+            $table->string('business_nature');
             $table->timestamps();
         });
     }
