@@ -12,6 +12,7 @@ import {
     Typography
 } from "@mui/material";
 import AddItemModal from '../components/maintenance/AddItemModal';
+import {AddBox} from "@mui/icons-material";
 
 const modalStyle = {
     position: 'absolute',
@@ -200,7 +201,7 @@ const MaintenancePage = () => {
                     color={"primary"}
                     onClick={() => setShowModal(true)}
                 >
-                    +
+                    <AddBox/>
                 </Fab>
 
                 {/* Modal */}

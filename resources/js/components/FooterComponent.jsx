@@ -1,5 +1,5 @@
 import React from 'react';
-import { BuildRounded, ShoppingCart } from "@mui/icons-material"
+import {BuildRounded, Person, ShoppingCart} from "@mui/icons-material"
 import { BottomNavigation, BottomNavigationAction } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react';
@@ -16,6 +16,7 @@ const FooterComponent = () => {
         >
             <BottomNavigationAction label={'Maintenance'} icon={<BuildRounded/>} onClick={() => navigate('/')} />
             <BottomNavigationAction label={'Sales'} icon={<ShoppingCart/>}  onClick={() => navigate('/sales')}/>
+            <BottomNavigationAction label={'Customer'} icon={<Person/>}  onClick={() => navigate('/customer')}/>
         </BottomNavigation>
     )
 }

@@ -8,6 +8,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MaintenancePage from "@/pages/MaintenancePage.jsx";
 import SalesPage from "@/pages/SalesPage.jsx";
 import FooterComponent from "@/components/FooterComponent.jsx";
+import CustomerPage from "@/pages/CustomerPage.jsx";
 
 const theme = createTheme({
     palette: {
@@ -25,6 +26,7 @@ const App = () => {
                 <Route path={'/'}>
                     <Route index element={<MaintenancePage/>} />
                     <Route path={'/sales'} element={<SalesPage/>} />
+                    <Route path={'/customer'} element={<CustomerPage/>} />
                 </Route>
             </Routes>
             <FooterComponent/>
