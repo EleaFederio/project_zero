@@ -19,10 +19,12 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_initial');
-            $table->string('address');
+            $table->string('province');
+            $table->string('municipality');
+            $table->string('barangay');
             $table->date('date_of_birth');
             $table->string('place_of_birth');
-            $table->char('sex', 1);
+            $table->char('sex', 6);
             $table->string('citizenship');
             $table->string('occupation');
             $table->string('tin');
