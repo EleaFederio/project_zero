@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -29,15 +30,22 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $custom_id = IdGenerator::generate(['table' => 'items', 'field' => 'item_code', 'length' => 12, 'prefix' => date('Y').''.date('m')]);
         $request->validate([
-            'item_code' => 'required|string|max:10|unique:items,item_code',
             'bar_code' => 'string|max:30',
             'name' => 'required|string',
             'description' => 'string',
             'unit_cost' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'unit' => 'required|string'
         ]);
-        Item::create($request->all());
+        $item = new Item();
+        $item->item_code = $custom_id;
+        $item->bar_code = $request->bar_code;
+        $item->name = $request->name;
+        $item->description = $request->description;
+        $item->unit_cost = $request->unit_cost;
+        $item->unit = $request->unit;
+        $item->save();
         return response()->json([
             'success' => true,
             'message' => 'Item Added!'
