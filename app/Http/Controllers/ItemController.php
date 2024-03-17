@@ -36,6 +36,7 @@ class ItemController extends Controller
             'name' => 'required|string',
             'description' => 'string',
             'unit_cost' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'total_qty' => 'required|numeric',
             'unit' => 'required|string'
         ]);
         $item = new Item();
@@ -44,6 +45,7 @@ class ItemController extends Controller
         $item->name = $request->name;
         $item->description = $request->description;
         $item->unit_cost = $request->unit_cost;
+        $item->total_qty = $request->total_qty;
         $item->unit = $request->unit;
         $item->save();
         return response()->json([

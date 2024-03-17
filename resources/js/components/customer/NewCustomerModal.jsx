@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
     Button,
     Dialog,
@@ -13,6 +13,35 @@ import {
 import {DatePicker} from "@mui/x-date-pickers";
 
 const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer, setNewCustomer, updateNewCustomerState}) => {
+
+    const [customerType, setCustomerType] = useState();
+    const [customerPriceLevel, setCustomerPriceLevel] = useState();
+
+    const getCustomerType = () => {
+        axios.get('api/customer_type')
+            .then(result => {
+                setCustomerType(result.data);
+            })
+            .catch(error => {
+                console.log('error');
+            })
+    }
+
+    const getPriceLevel = () => {
+        axios.get('api/customer_type')
+            .then(result => {
+                setCustomerPriceLevel(result.data);
+            })
+            .catch(error => {
+                console.log('error');
+            })
+    }
+
+    useEffect(() => {
+        getCustomerType();
+        getPriceLevel();
+    }, []);
+
     return (
         <Dialog
             open={showCustomerModal}

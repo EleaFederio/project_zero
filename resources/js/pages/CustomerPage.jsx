@@ -3,10 +3,11 @@ import {AppBar, Box, Container, CssBaseline, Fab, Grid, Toolbar, Typography} fro
 import {PersonAdd} from "@mui/icons-material";
 import CustomerList from "@/components/customer/CustomerList";
 import NewCustomerModal from "@/components/customer/NewCustomerModal.jsx";
-import CustomerDetailsCard from "@/components/maintenance/CustomerDetailsCard.jsx";
+import CustomerDetailsCard from "@/components/customer/CustomerDetailsCard.jsx";
 
 const CustomerPage = () => {
     const [showCustomerModal, setShowCustomerModal] = useState(false);
+    const [customer, setCustomer] = useState();
     const [newCustomer, setNewCustomer] = useState({
         area : '',
         price_level : '',

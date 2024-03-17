@@ -145,7 +145,7 @@ const MaintenancePage = () => {
                                     <TableCell><b>Name</b></TableCell>
                                     <TableCell><b>Description</b></TableCell>
                                     <TableCell><b>Price</b></TableCell>
-                                    <TableCell><b>Quantity</b></TableCell>
+                                    <TableCell><b>Stock</b></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
