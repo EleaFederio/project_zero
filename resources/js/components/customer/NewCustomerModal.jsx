@@ -28,7 +28,7 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer,
     }
 
     const getPriceLevel = () => {
-        axios.get('api/customer_type')
+        axios.get('api/price_level')
             .then(result => {
                 setCustomerPriceLevel(result.data);
             })
@@ -68,24 +68,52 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer,
                         />
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                        <TextField
-                            label={'Price Level'}
-                            name={'price_level'}
-                            size={'small'}
-                            value={newCustomer.price_level}
-                            onChange={updateNewCustomerState}
-                            fullWidth
-                        />
+                        <FormControl fullWidth>
+                            <InputLabel value={newCustomer.price_level} size={'small'} id="demo-simple-select-label">Customer Type</InputLabel>
+                            <Select
+                                value={newCustomer.price_level}
+                                title={'Price Level'}
+                                size={'small'}
+                                name={'price_level'}
+                                onChange={updateNewCustomerState}
+                            >
+                                {
+                                    !customerPriceLevel ? (
+                                            <MenuItem ></MenuItem>
+                                        ) :
+                                        customerPriceLevel.map((c_price_level) => {
+                                            return (
+                                                <MenuItem key={c_price_level.price_level_name} value={c_price_level.price_level_name}>{c_price_level.price_level_name}</MenuItem>
+                                            )
+                                        })
+                                }
+
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                        <TextField
-                            label={'Type'}
-                            name={'customer_type'}
-                            size={'small'}
-                            value={newCustomer.customer_type}
-                            onChange={updateNewCustomerState}
-                            fullWidth
-                        />
+                        <FormControl fullWidth>
+                            <InputLabel value={newCustomer.customer_type} size={'small'} id="demo-simple-select-label">Customer Type</InputLabel>
+                            <Select
+                                value={newCustomer.customer_type}
+                                title={'Customer Type'}
+                                size={'small'}
+                                name={'customer_type'}
+                                onChange={updateNewCustomerState}
+                            >
+                                {
+                                    !customerType ? (
+                                        <MenuItem ></MenuItem>
+                                    ) :
+                                        customerType.map((c_type) => {
+                                            return (
+                                                <MenuItem key={c_type.type_name} value={c_type.type_name}>{c_type.type_name}</MenuItem>
+                                            )
+                                        })
+                                }
+
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                         <h4 style={{ margin: 0}}>Personal Information</h4>
