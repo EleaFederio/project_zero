@@ -12,6 +12,7 @@ import CustomerPage from "@/pages/CustomerPage.jsx";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import ReportPage from "@/pages/ReportPage.jsx";
+import SettingsPage from "@/pages/SettingsPage.jsx";
 
 const theme = createTheme({
     palette: {
@@ -31,6 +32,7 @@ const App = () => {
                     <Route path={'/sales'} element={<SalesPage/>} />
                     <Route path={'/customer'} element={<CustomerPage/>} />
                     <Route path={'/report'} element={<ReportPage/>} />
+                    <Route path={'/settings'} element={<SettingsPage/>} />
                 </Route>
             </Routes>
             <FooterComponent/>

@@ -1,6 +1,6 @@
 import React from 'react';
-import {BuildRounded, Person, ReceiptLong, ShoppingCart} from "@mui/icons-material"
-import { BottomNavigation, BottomNavigationAction } from "@mui/material"
+import {BuildRounded, Person, ReceiptLong, Settings, ShoppingCart} from "@mui/icons-material"
+import {BottomNavigation, BottomNavigationAction, Toolbar} from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react';
 
@@ -18,6 +18,7 @@ const FooterComponent = () => {
             <BottomNavigationAction label={'Sales'} icon={<ShoppingCart/>}  onClick={() => navigate('/sales')}/>
             <BottomNavigationAction label={'Customer'} icon={<Person/>}  onClick={() => navigate('/customer')}/>
             <BottomNavigationAction label={'Reporting'} icon={<ReceiptLong/>}  onClick={() => navigate('/report')}/>
+            <BottomNavigationAction label={'Settings'} icon={<Settings/>}  onClick={() => navigate('/settings')}/>
         </BottomNavigation>
     )
 }

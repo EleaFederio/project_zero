@@ -30,7 +30,7 @@ class CustomerController extends Controller
             "province" => 'required|string|max:50',
             "municipality" => 'required|string|max:50',
             "barangay" => 'required|string|max:50',
-            "date_of_birth" => 'required|date',
+            "date_of_birth" => 'required|date_format:Y-m-d',
             "place_of_birth" => 'required|string',
             "sex" => 'required|string|max:6',
             "citizenship" => 'required|string|max:50',
@@ -39,6 +39,11 @@ class CustomerController extends Controller
             "company_name" => 'nullable|string|max:100',
             "company_address" => 'nullable|string|max:200',
             "business_nature" => 'nullable|string|max:100',
+        ]);
+        Customer::create($request->all());
+        return response()->json([
+            'success' => true,
+            'message' => 'Customer created!'
         ]);
     }
 

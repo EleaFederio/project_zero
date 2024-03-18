@@ -33,6 +33,20 @@ const CustomerPage = () => {
         console.log(newCustomer);
     };
 
+    const getCustomer = () => {
+        axios.get('api/customer')
+            .then(result => {
+                setCustomer(result.data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    useEffect(() => {
+        getCustomer()
+    }, [])
+
     return(
         <>
             <CssBaseline />
@@ -54,7 +68,9 @@ const CustomerPage = () => {
             <Container>
                 <Grid container spacing={2} sx={{mt: 3}}>
                     <Grid item xs={6}>
-                        <CustomerList/>
+                        <CustomerList
+                            customer={customer}
+                        />
                     </Grid>
                     <Grid item xs={6}>
                         <CustomerDetailsCard/>

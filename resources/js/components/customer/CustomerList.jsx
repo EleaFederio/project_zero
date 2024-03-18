@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import {Person} from "@mui/icons-material";
 
-const CustomerList = () => {
+const CustomerList = ({customer}) => {
     return(
         <>
             <Card>
@@ -35,11 +35,22 @@ const CustomerList = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell></TableCell>
-                                        <TableCell></TableCell>
-                                        <TableCell></TableCell>
-                                    </TableRow>
+                                    {
+                                        !customer ? (
+                                            <TableRow>
+                                                <p>Loading...</p>
+                                            </TableRow>
+                                        ) :
+                                            customer.map((cust) => {
+                                                return (
+                                                    <TableRow>
+                                                        <TableCell>{cust.customer_id}</TableCell>
+                                                        <TableCell>{cust.firstname} {cust.lastname}</TableCell>
+                                                        <TableCell>{cust.address}</TableCell>
+                                                    </TableRow>
+                                                )
+                                            })
+                                    }
                                 </TableBody>
                             </Table>
                         </TableContainer>
