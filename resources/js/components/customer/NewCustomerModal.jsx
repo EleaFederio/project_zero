@@ -16,6 +16,12 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer,
 
     const [customerType, setCustomerType] = useState();
     const [customerPriceLevel, setCustomerPriceLevel] = useState();
+    const [provinces, setProvinces] = useState([]);
+    const [municipalities, setMunicipalities] = useState([]);
+    const [barangays, setBarangays] = useState([]);
+    const [selectedProvince, setSelectedProvince] = useState('');
+    const [selectedMunicipality, setSelectedMunicipality] = useState('');
+    const [selectedBarangay, setSelectedBarangay] = useState('');
 
     const getCustomerType = () => {
         axios.get('api/customer_type')
@@ -37,9 +43,58 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer,
             })
     }
 
+    const fetchProvinces = () => {
+        axios.get('https://psgc.gitlab.io/api/provinces/')
+            .then(response => {
+                console.log(response.data)
+                setProvinces(response.data)
+            })
+            .catch(error => {
+                console.error('Error fetching provinces:', error);
+            })
+    };
+
+    const fetchMunicipalities = async (provinceId) => {
+        try {
+            const response = await axios.get(`https://psgc.gitlab.io/api/municipalities?provinceId=${provinceId}`);
+            setMunicipalities(response.data);
+        } catch (error) {
+            console.error('Error fetching municipalities:', error);
+        }
+    };
+
+    const fetchBarangays = async (municipalityId) => {
+        try {
+            const response = await axios.get(`https://psgc.gitlab.io/api/barangays?municipalityId=${municipalityId}`);
+            setBarangays(response.data);
+        } catch (error) {
+            console.error('Error fetching barangays:', error);
+        }
+    };
+
+    const handleProvinceChange = (event) => {
+        const provinceId = event.target.value;
+        setSelectedProvince(provinceId);
+        setSelectedMunicipality('');
+        setSelectedBarangay('');
+        fetchMunicipalities(provinceId);
+    };
+
+    const handleMunicipalityChange = (event) => {
+        const municipalityId = event.target.value;
+        setSelectedMunicipality(municipalityId);
+        setSelectedBarangay('');
+        fetchBarangays(municipalityId);
+    };
+
+    const handleBarangayChange = (event) => {
+        setSelectedBarangay(event.target.value);
+    };
+
     useEffect(() => {
         getCustomerType();
         getPriceLevel();
+        fetchProvinces();
     }, []);
 
     return (
@@ -51,7 +106,7 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer,
         >
             <DialogTitle style={{ backgroundColor: '#4dabf5' }}>Add New Customer</DialogTitle>
             <DialogContent>
-                <Grid container sx={{mt: 2}} spacing={3}>
+                <Grid container sx={{mt: 2}} spacing={2}>
                     <Grid item xs={12}>
                         <h4 style={{ margin: 0}}>Personal</h4>
                     </Grid>
@@ -152,12 +207,87 @@ const NewCustomerModal = ({showCustomerModal, setShowCustomerModal, newCustomer,
                         />
                     </Grid>
                     {/* Second Row - Address */}
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={3}>
+                        {
+                            !provinces ? (
+                                <TextField
+                                    label={'Province'}
+                                    name={'barangay'}
+                                    size={'small'}
+                                    value={newCustomer.barangay}
+                                    onChange={updateNewCustomerState}
+                                    fullWidth
+                                />
+                            ) : (
+                                <FormControl variant="outlined" fullWidth size={'small'}>
+                                    <InputLabel id="province-label">Province</InputLabel>
+                                    <Select
+                                        labelId="province-label"
+                                        id="province"
+                                        value={selectedProvince}
+                                        onChange={handleProvinceChange}
+                                        label="Province"
+                                    >
+                                        <MenuItem value="">
+                                            <em>Select Province</em>
+                                        </MenuItem>
+                                        {provinces.map((province) => (
+                                            <MenuItem key={province.id} value={province.id}>{province.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            )
+                        }
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                        {
+                            !provinces ? (
+                                <TextField
+                                    label={'Municipality'}
+                                    name={'barangay'}
+                                    size={'small'}
+                                    value={newCustomer.barangay}
+                                    onChange={updateNewCustomerState}
+                                    fullWidth
+                                />
+                            ) : (
+                                <FormControl variant="outlined">
+                                    <InputLabel id="municipality-label">Municipality</InputLabel>
+                                    <Select
+                                        labelId="municipality-label"
+                                        id="municipality"
+                                        value={selectedMunicipality}
+                                        onChange={handleMunicipalityChange}
+                                        label="Municipality"
+                                        disabled={!selectedProvince}
+                                    >
+                                        <MenuItem value="">
+                                            <em>Select Municipality</em>
+                                        </MenuItem>
+                                        {municipalities.map((municipality) => (
+                                            <MenuItem key={municipality.id} value={municipality.id}>{municipality.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            )
+                        }
+                    </Grid>
+                    <Grid item xs={3}>
                         <TextField
-                            label={'Address'}
-                            name={'address'}
+                            label={'Barangay'}
+                            name={'barangay'}
                             size={'small'}
-                            value={newCustomer.address}
+                            value={newCustomer.barangay}
+                            onChange={updateNewCustomerState}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={3}>
+                        <TextField
+                            label={'Block/Street'}
+                            name={'block_street'}
+                            size={'small'}
+                            value={newCustomer.block_street}
                             onChange={updateNewCustomerState}
                             fullWidth
                         />

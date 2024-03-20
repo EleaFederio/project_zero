@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('province');
             $table->string('municipality');
             $table->string('barangay');
+            $table->string('block_street');
             $table->date('date_of_birth');
             $table->string('place_of_birth');
             $table->char('sex', 6);
